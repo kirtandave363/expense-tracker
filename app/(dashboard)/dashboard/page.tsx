@@ -1,23 +1,99 @@
+import { getExpensesForMonth } from "@/actions/expenseActions";
+import AddExpenseForm from "@/components/AddExpenseForm";
+import DailyExpenseChart from "@/components/DailyExpenseChart";
+import MonthSelector from "@/components/MonthSelector";
+import StatsCards from "@/components/StatsCards";
+import ExpenseCard from "@/components/ExpenseCard";
 import { getUserFromToken } from "@/lib/auth";
-import { redirect } from "next/navigation";
-import Link from "next/link";
 
-export default async function DashboardPage() {
+const MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+interface DashboardPageProps {
+  searchParams: Promise<{ month?: string; year?: string }>;
+}
+
+export default async function DashboardPage({
+  searchParams,
+}: DashboardPageProps) {
+  const params = await searchParams;
+  const month = params.month ? parseInt(params.month) : undefined;
+  const year = params.year ? parseInt(params.year) : undefined;
+
+  // Fetch expenses from server
+  const data = await getExpensesForMonth(month, year);
+
   const user = await getUserFromToken();
 
-  if (!user) {
-    redirect("/login");
-  }
+  // Get first name from full name
+  const firstName = user?.name.split(" ")[0] || "User";
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-lg flex items-center justify-center">
+    <div className="p-4 lg:p-8 space-y-6">
+      {/* Welcome Message */}
+      <div className="bg-gradient-to-r from-purple-500 to-indigo-600 rounded-xl shadow-lg p-6 text-white">
+        <h1 className="text-3xl font-bold mb-2">
+          Welcome back, {firstName}! 👋
+        </h1>
+        <p className="text-purple-100">
+          Here's your expense summary for {MONTHS[data.month - 1]} {data.year}
+        </p>
+      </div>
+
+      {/* Month Selector */}
+      <MonthSelector currentMonth={data.month} currentYear={data.year} />
+
+      {/* Stats Cards */}
+      <StatsCards
+        totalAmount={data.totalAmount}
+        totalExpenses={data.totalExpenses}
+        month={MONTHS[data.month - 1]}
+      />
+
+      {/* Main Content Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left: Add Expense Form */}
+        <div className="lg:col-span-1">
+          <AddExpenseForm />
+        </div>
+
+        {/* Right: Chart */}
+        <div className="lg:col-span-2">
+          <DailyExpenseChart
+            dailyTotals={data.dailyTotals}
+            month={data.month}
+            year={data.year}
+          />
+        </div>
+      </div>
+
+      {/* Expenses List */}
+      <div>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-2xl font-bold text-gray-800">All Expenses</h2>
+          <span className="text-sm text-gray-500">
+            {data.totalExpenses}{" "}
+            {data.totalExpenses === 1 ? "expense" : "expenses"}
+          </span>
+        </div>
+
+        {data.expenses.length === 0 ? (
+          <div className="bg-white rounded-xl shadow-sm p-12 text-center">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
               <svg
-                className="w-6 h-6 text-white"
+                className="w-8 h-8 text-gray-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -26,69 +102,25 @@ export default async function DashboardPage() {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
-                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
                 />
               </svg>
             </div>
-            <h1 className="text-2xl font-bold text-gray-800">
-              Expense Tracker
-            </h1>
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">
+              No expenses yet
+            </h3>
+            <p className="text-gray-600">
+              Add your first expense to start tracking!
+            </p>
           </div>
-
-          <form action="/api/auth/logout" method="POST">
-            <button
-              type="submit"
-              className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition"
-            >
-              Logout
-            </button>
-          </form>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-xl shadow-sm p-8 text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
-            <svg
-              className="w-8 h-8 text-green-600"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M5 13l4 4L19 7"
-              />
-            </svg>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {data.expenses.map((expense) => (
+              <ExpenseCard key={expense._id} expense={expense} />
+            ))}
           </div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">
-            Welcome to Your Dashboard!
-          </h2>
-          <p className="text-gray-600 mb-6">
-            Authentication is working perfectly. Next, we'll add expense
-            tracking features.
-          </p>
-          <div className="inline-flex items-center gap-2 text-sm text-gray-500">
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            <span>User ID: {user._id.toString()}</span>
-          </div>
-        </div>
-      </main>
+        )}
+      </div>
     </div>
   );
 }

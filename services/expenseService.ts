@@ -23,6 +23,17 @@ export interface Expense {
     category: string;
     date: string;
     description?: string;
+    emiId?: string;
+    isEMI: boolean;
+}
+
+export interface GetExpensesResponse {
+    month: number;
+    year: number;
+    totalExpenses: number;
+    totalAmount: number;
+    expenses: Expense[];
+    expensesByDate: Record<string, Expense[]>;
 }
 
 export interface CreateExpenseResponse {
@@ -41,6 +52,15 @@ export interface DeleteExpenseResponse {
 }
 
 class ExpenseService {
+    async getExpenses(month?: number, year?: number): Promise<GetExpensesResponse> {
+        const params: any = {};
+        if (month) params.month = month;
+        if (year) params.year = year;
+
+        const response = await api.get<GetExpensesResponse>('/expenses', { params });
+        return response.data;
+    }
+
     async createExpense(data: CreateExpenseData): Promise<CreateExpenseResponse> {
         const response = await api.post<CreateExpenseResponse>('/expenses', data);
         return response.data;

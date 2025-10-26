@@ -2,6 +2,7 @@ import mongoose, { Schema, Document } from "mongoose";
 
 export interface IEXPENSE extends Document {
     userId: mongoose.Types.ObjectId;
+    emiId?: mongoose.Types.ObjectId;
     title: string;
     amount: number;
     category: string;
@@ -14,6 +15,11 @@ const ExpenseSchema = new Schema<IEXPENSE>({
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true
+    },
+    emiId: {
+        type: Schema.Types.ObjectId,
+        ref: 'EMI',
+        required: false,
     },
     title: {
         type: String,

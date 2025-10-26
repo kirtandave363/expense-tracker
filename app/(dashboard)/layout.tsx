@@ -1,16 +1,17 @@
 import { getUserFromToken } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import DashboardLayoutClient from "@/components/DashboardLayoutClient";
 
 export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const user = await getUserFromToken();
+  const userId = await getUserFromToken();
 
-  if (!user) {
+  if (!userId) {
     redirect("/login");
   }
 
-  return <div className="min-h-screen bg-gray-50">{children}</div>;
+  return <DashboardLayoutClient>{children}</DashboardLayoutClient>;
 }

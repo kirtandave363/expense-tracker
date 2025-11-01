@@ -45,6 +45,7 @@ export async function getUserFromToken() {
         const decoded = await verifyToken(token);
         return decoded;
     } catch (error) {
+        console.log("error: ", error)
         return null;
     }
 }

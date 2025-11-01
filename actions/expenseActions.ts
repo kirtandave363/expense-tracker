@@ -170,10 +170,16 @@ export async function getExpensesForMonth(month?: number, year?: number) {
             const dayOfMonth = Math.min(emi.dayOfMonth, daysInMonth);
             const emiExpenseDate = new Date(Date.UTC(targetYear, targetMonth - 1, dayOfMonth, 12, 0, 0, 0));
 
+            // Normalize dates to compare only dates, ignoring time
+            const emiExpenseDateOnly = new Date(emiExpenseDate.getFullYear(), emiExpenseDate.getMonth(), emiExpenseDate.getDate());
+            const emiStartDateOnly = new Date(emiStartDate.getFullYear(), emiStartDate.getMonth(), emiStartDate.getDate());
+            const emiEndDateOnly = new Date(emiEndDate.getFullYear(), emiEndDate.getMonth(), emiEndDate.getDate());
+            const nowDateOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
             if (
-                emiExpenseDate < emiStartDate ||
-                emiExpenseDate > emiEndDate ||
-                emiExpenseDate > now
+                emiExpenseDateOnly < emiStartDateOnly ||
+                emiExpenseDateOnly > emiEndDateOnly ||
+                emiExpenseDateOnly > nowDateOnly
             ) {
                 continue;
             }

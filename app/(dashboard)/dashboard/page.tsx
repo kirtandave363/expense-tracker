@@ -6,6 +6,8 @@ import StatsCards from "@/components/StatsCards";
 import ExpenseCard from "@/components/ExpenseCard";
 import { getUserFromToken } from "@/lib/auth";
 
+export const dynamic = "force-dynamic";
+
 const MONTHS = [
   "January",
   "February",

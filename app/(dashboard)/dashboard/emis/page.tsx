@@ -3,6 +3,8 @@ import AddEMIForm from "@/components/AddEMIForm";
 import EMICard from "@/components/EMICard";
 import { getUserFromToken } from "@/lib/auth";
 
+export const dynamic = "force-dynamic";
+
 export default async function EMIsPage() {
   const [user, data] = await Promise.all([getUserFromToken(), getAllEMIs()]);
 

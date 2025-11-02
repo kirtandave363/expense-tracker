@@ -1,12 +1,15 @@
-import { redirect } from "next/navigation";
 import { getUserFromToken } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import LandingPage from "@/components/LandingPage";
 
 export default async function HomePage() {
   const userId = await getUserFromToken();
 
+  // If logged in, go to dashboard
   if (userId) {
     redirect("/dashboard");
-  } else {
-    redirect("/login");
   }
+
+  // Show landing page if not logged in
+  return <LandingPage />;
 }

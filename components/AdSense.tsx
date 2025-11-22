@@ -56,30 +56,44 @@ export default function AdSense({
       ref={adRef}
       className={`adsense-container ${className}`}
       style={{
-        minHeight,
-        maxHeight: minHeight, // Prevent expansion beyond reserved space
+        height: minHeight, // Fixed height, not min-height
+        maxHeight: minHeight,
         minWidth,
         width: "100%",
         maxWidth: "100%",
         overflow: "hidden",
         position: "relative",
-        contain: "layout style paint", // CSS containment to isolate layout
-        isolation: "isolate", // Create new stacking context
+        display: "block",
+        flexShrink: 0, // Prevent flexbox from shrinking
       }}
     >
-      <ins
-        className="adsbygoogle"
+      <div
         style={{
-          ...style,
-          maxWidth: "100%",
-          maxHeight: minHeight,
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
           overflow: "hidden",
         }}
-        data-ad-client="ca-pub-5294896791916834"
-        data-ad-slot={slot}
-        data-ad-format={format}
-        data-full-width-responsive="true"
-      />
+      >
+        <ins
+          className="adsbygoogle"
+          style={{
+            display: "block",
+            width: "100%",
+            height: "100%",
+            maxWidth: "100%",
+            maxHeight: "100%",
+            overflow: "hidden",
+            position: "relative",
+          }}
+          data-ad-client="ca-pub-5294896791916834"
+          data-ad-slot={slot}
+          data-ad-format={format}
+          data-full-width-responsive="false"
+        />
+      </div>
     </div>
   );
 }

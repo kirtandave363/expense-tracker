@@ -44,6 +44,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-icon.png" />
       </head>
       <body className={inter.className}>
+        {/* AdSense Script - Loads early with afterInteractive strategy (Next.js recommended) */}
         <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5294896791916834"

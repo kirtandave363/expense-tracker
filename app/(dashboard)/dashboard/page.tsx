@@ -66,11 +66,23 @@ export default async function DashboardPage({
       />
 
       {/* AdSense Banner Ad - Between Stats and Main Content */}
-      <div className="bg-white rounded-xl shadow-sm p-4 border border-gray-200">
+      <div
+        className="bg-white rounded-xl shadow-sm p-4 border border-gray-200"
+        style={{
+          minHeight: "120px",
+          width: "100%",
+          overflow: "hidden",
+        }}
+      >
         <AdSense
           format="horizontal"
-          style={{ display: "block", width: "100%", height: "100px" }}
-          className="min-h-[100px]"
+          style={{
+            display: "block",
+            width: "100%",
+            height: "100px",
+          }}
+          minHeight="100px"
+          minWidth="100%"
         />
       </div>
 
@@ -135,11 +147,23 @@ export default async function DashboardPage({
 
         {/* AdSense Ad - After Expenses List */}
         {data.expenses.length > 0 && (
-          <div className="mt-6 bg-white rounded-xl shadow-sm p-4 border border-gray-200">
+          <div
+            className="mt-6 bg-white rounded-xl shadow-sm p-4 border border-gray-200"
+            style={{
+              minHeight: "120px",
+              width: "100%",
+              overflow: "hidden",
+            }}
+          >
             <AdSense
               format="horizontal"
-              style={{ display: "block", width: "100%", height: "100px" }}
-              className="min-h-[100px]"
+              style={{
+                display: "block",
+                width: "100%",
+                height: "100px",
+              }}
+              minHeight="100px"
+              minWidth="100%"
             />
           </div>
         )}

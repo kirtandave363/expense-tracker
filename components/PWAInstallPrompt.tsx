@@ -9,14 +9,16 @@ export default function PWAInstallPrompt() {
 
   useEffect(() => {
     const handler = (e: any) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
-
       // Check if user has dismissed before
       const dismissed = localStorage.getItem("pwa-install-dismissed");
+
+      // Only prevent default and show our custom prompt if user hasn't dismissed
       if (!dismissed) {
+        e.preventDefault();
+        setDeferredPrompt(e);
         setShowPrompt(true);
       }
+      // If dismissed, let browser handle it normally (no preventDefault)
     };
 
     window.addEventListener("beforeinstallprompt", handler);

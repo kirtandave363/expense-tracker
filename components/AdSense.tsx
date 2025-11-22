@@ -57,15 +57,24 @@ export default function AdSense({
       className={`adsense-container ${className}`}
       style={{
         minHeight,
+        maxHeight: minHeight, // Prevent expansion beyond reserved space
         minWidth,
         width: "100%",
+        maxWidth: "100%",
         overflow: "hidden",
         position: "relative",
+        contain: "layout style paint", // CSS containment to isolate layout
+        isolation: "isolate", // Create new stacking context
       }}
     >
       <ins
         className="adsbygoogle"
-        style={style}
+        style={{
+          ...style,
+          maxWidth: "100%",
+          maxHeight: minHeight,
+          overflow: "hidden",
+        }}
         data-ad-client="ca-pub-5294896791916834"
         data-ad-slot={slot}
         data-ad-format={format}

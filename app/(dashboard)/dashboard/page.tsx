@@ -69,9 +69,12 @@ export default async function DashboardPage({
       <div
         className="bg-white rounded-xl shadow-sm p-4 border border-gray-200"
         style={{
-          minHeight: "120px",
+          height: "120px", // Fixed height instead of min-height
+          maxHeight: "120px",
           width: "100%",
           overflow: "hidden",
+          position: "relative",
+          contain: "layout style", // Prevent layout shifts
         }}
       >
         <AdSense
@@ -80,6 +83,7 @@ export default async function DashboardPage({
             display: "block",
             width: "100%",
             height: "100px",
+            maxHeight: "100px",
           }}
           minHeight="100px"
           minWidth="100%"
@@ -150,9 +154,12 @@ export default async function DashboardPage({
           <div
             className="mt-6 bg-white rounded-xl shadow-sm p-4 border border-gray-200"
             style={{
-              minHeight: "120px",
+              height: "120px", // Fixed height instead of min-height
+              maxHeight: "120px",
               width: "100%",
               overflow: "hidden",
+              position: "relative",
+              contain: "layout style", // Prevent layout shifts
             }}
           >
             <AdSense
@@ -161,6 +168,7 @@ export default async function DashboardPage({
                 display: "block",
                 width: "100%",
                 height: "100px",
+                maxHeight: "100px",
               }}
               minHeight="100px"
               minWidth="100%"

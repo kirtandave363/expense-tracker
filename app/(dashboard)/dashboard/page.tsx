@@ -4,6 +4,7 @@ import DailyExpenseChart from "@/components/DailyExpenseChart";
 import MonthSelector from "@/components/MonthSelector";
 import StatsCards from "@/components/StatsCards";
 import ExpenseCard from "@/components/ExpenseCard";
+import AdSense from "@/components/AdSense";
 import { getUserFromToken } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
@@ -64,6 +65,15 @@ export default async function DashboardPage({
         month={MONTHS[data.month - 1]}
       />
 
+      {/* AdSense Banner Ad - Between Stats and Main Content */}
+      <div className="bg-white rounded-xl shadow-sm p-4 border border-gray-200">
+        <AdSense
+          format="horizontal"
+          style={{ display: "block", width: "100%", height: "100px" }}
+          className="min-h-[100px]"
+        />
+      </div>
+
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left: Add Expense Form */}
@@ -120,6 +130,17 @@ export default async function DashboardPage({
             {data.expenses.map((expense) => (
               <ExpenseCard key={expense._id} expense={expense} />
             ))}
+          </div>
+        )}
+
+        {/* AdSense Ad - After Expenses List */}
+        {data.expenses.length > 0 && (
+          <div className="mt-6 bg-white rounded-xl shadow-sm p-4 border border-gray-200">
+            <AdSense
+              format="horizontal"
+              style={{ display: "block", width: "100%", height: "100px" }}
+              className="min-h-[100px]"
+            />
           </div>
         )}
       </div>

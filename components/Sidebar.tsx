@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { LayoutDashboard, CreditCard, X, LogOut } from "lucide-react";
 import { useState } from "react";
+import AdSense from "./AdSense";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -106,6 +107,17 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             );
           })}
         </nav>
+
+        {/* AdSense Ad - Sidebar */}
+        <div className="absolute bottom-20 w-full px-4 pb-4">
+          <div className="bg-gray-50 rounded-lg p-2 border border-gray-200">
+            <AdSense
+              format="vertical"
+              style={{ display: "block", width: "100%", height: "250px" }}
+              className="min-h-[250px]"
+            />
+          </div>
+        </div>
 
         {/* Logout */}
         <div className="absolute bottom-0 w-full p-4 border-t">

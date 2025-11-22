@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import PWAInstallPrompt from "@/components/PWAInstallPrompt";
 
@@ -43,6 +44,12 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-icon.png" />
       </head>
       <body className={inter.className}>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5294896791916834"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
         {children}
         <PWAInstallPrompt />
       </body>

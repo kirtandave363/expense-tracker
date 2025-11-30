@@ -67,27 +67,19 @@ export default async function DashboardPage({
 
       {/* AdSense Banner Ad - Between Stats and Main Content */}
       <div
-        className="bg-white rounded-xl shadow-sm p-4 border border-gray-200"
+        className="bg-white rounded-xl shadow-sm border border-gray-200"
         style={{
-          height: "120px", // Fixed height instead of min-height
-          maxHeight: "120px",
+          height: "130px",
+          maxHeight: "130px",
           width: "100%",
           overflow: "hidden",
-          position: "relative",
-          contain: "layout style", // Prevent layout shifts
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexShrink: 0,
         }}
       >
-        <AdSense
-          format="horizontal"
-          style={{
-            display: "block",
-            width: "100%",
-            height: "100px",
-            maxHeight: "100px",
-          }}
-          minHeight="100px"
-          minWidth="100%"
-        />
+        <AdSense format="horizontal" minHeight="100px" minWidth="100%" />
       </div>
 
       {/* Main Content Grid */}
@@ -152,27 +144,19 @@ export default async function DashboardPage({
         {/* AdSense Ad - After Expenses List */}
         {data.expenses.length > 0 && (
           <div
-            className="mt-6 bg-white rounded-xl shadow-sm p-4 border border-gray-200"
+            className="mt-6 bg-white rounded-xl shadow-sm border border-gray-200"
             style={{
-              height: "120px", // Fixed height instead of min-height
-              maxHeight: "120px",
+              height: "130px",
+              maxHeight: "130px",
               width: "100%",
               overflow: "hidden",
-              position: "relative",
-              contain: "layout style", // Prevent layout shifts
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
             }}
           >
-            <AdSense
-              format="horizontal"
-              style={{
-                display: "block",
-                width: "100%",
-                height: "100px",
-                maxHeight: "100px",
-              }}
-              minHeight="100px"
-              minWidth="100%"
-            />
+            <AdSense format="horizontal" minHeight="100px" minWidth="100%" />
           </div>
         )}
       </div>
